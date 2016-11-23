@@ -1,6 +1,6 @@
 from random import randrange
 
-from Walker import Walker
+from walker.Walker import Walker
 
 
 class NonUniformWalker(Walker):

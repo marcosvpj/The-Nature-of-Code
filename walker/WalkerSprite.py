@@ -9,7 +9,7 @@ class WalkerSprite:
         self.color = self.set_color()
 
     def sprite(self):
-        s = pygame.Surface((2, 2))
+        s = pygame.Surface((1, 1))
         s.fill(self.color)
         return s
 
