@@ -1,32 +1,21 @@
 from random import randrange
 
-import pygame
-
 
 class Walker:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-        s = pygame.Surface((2, 2))
-        s.fill((100, 100, 100))
-
-        self.sprite = s
-
-    def display(self, surface):
-        surface.blit(self.sprite, (self.x, self.y))
+    def __init__(self, coord):
+        self.x = coord[0]
+        self.y = coord[1]
 
     def step(self):
-        choice = randrange(0, 4)
+        steps = randrange(-1, 2)
+        self.x += steps
 
-        if choice == 0:
-            self.x += 1
-        if choice == 1:
-            self.x -= 1
-        if choice == 2:
-            self.y += 1
-        if choice == 3:
-            self.y -= 1
+        steps = randrange(-1, 2)
+        self.y += steps
 
     def update(self):
         self.step()
+
+    def position(self):
+        return self.x, self.y
+
