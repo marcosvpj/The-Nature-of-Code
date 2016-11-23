@@ -1,21 +1,17 @@
-from random import randrange
+from abc import abstractmethod, ABCMeta
 
 
-class Walker:
+class Walker(metaclass=ABCMeta):
     def __init__(self, coord):
         self.x = coord[0]
         self.y = coord[1]
 
-    def step(self):
-        steps = randrange(-1, 2)
-        self.x += steps
-
-        steps = randrange(-1, 2)
-        self.y += steps
+    def position(self):
+        return self.x, self.y
 
     def update(self):
         self.step()
 
-    def position(self):
-        return self.x, self.y
-
+    @abstractmethod
+    def step(self):
+        pass
