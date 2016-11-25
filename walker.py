@@ -7,33 +7,37 @@ from walker.NonUniformWalker import NonUniformWalker
 from walker.RandomWalker import RandomWalker
 from walker.WalkerSprite import WalkerSprite
 
-walkerR = RandomWalker((700, 200))
-walkerRSprite = WalkerSprite(walkerR)
 
-walkerG = GaussianRandomWalker((300, 200))
-walkerGSprite = WalkerSprite(walkerG)
+class Loop:
+    def __init__(self):
+        self.walkerR = RandomWalker((700, 200))
+        self.walkerRSprite = WalkerSprite(self.walkerR)
 
-walkerCD = CustomDistributionRandomWalker((100, 200))
-walkerCDSprite = WalkerSprite(walkerCD)
+        self.walkerG = GaussianRandomWalker((300, 200))
+        self.walkerGSprite = WalkerSprite(self.walkerG)
 
-walkerN = NonUniformWalker((700, 500))
-walkerNSprite = WalkerSprite(walkerN)
+        self.walkerCD = CustomDistributionRandomWalker((100, 200))
+        self.walkerCDSprite = WalkerSprite(self.walkerCD)
+
+        self.walkerN = NonUniformWalker((700, 500))
+        self.walkerNSprite = WalkerSprite(self.walkerN)
+
+    def loop(self, screen):
+        self.walkerRSprite.display(screen)
+        self.walkerR.update()
+
+        self.walkerNSprite.display(screen)
+        self.walkerN.update()
+
+        self.walkerGSprite.display(screen)
+        self.walkerG.update()
+
+        self.walkerCDSprite.display(screen)
+        self.walkerCD.update()
+
+        random.seed()
 
 
-def loop(screen):
-    walkerRSprite.display(screen)
-    walkerR.update()
+main_loop = Loop()
 
-    walkerNSprite.display(screen)
-    walkerN.update()
-
-    walkerGSprite.display(screen)
-    walkerG.update()
-
-    walkerCDSprite.display(screen)
-    walkerCD.update()
-
-    random.seed()
-
-
-engine.main(loop)
+engine.main(main_loop.loop)
