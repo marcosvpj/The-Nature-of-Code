@@ -13,6 +13,14 @@ class TestPVector(unittest.TestCase):
     def test_subtract_vector(self):
         self.assertEqual(PVector(5, 2) - PVector(3, 4), PVector(2, -2))
 
+    def test_normalize(self):
+        v = PVector(3, 4)
+
+        self.assertEqual(v.magnitude(), 5)
+
+        v.normalize()
+
+        self.assertEqual(v.magnitude(), 1)
 
 
 if __name__ == '__main__':

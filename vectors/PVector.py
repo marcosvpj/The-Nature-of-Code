@@ -19,7 +19,15 @@ class PVector:
         return PVector(self.x - other.x, self.y - other.y)
 
     def magnitude(self):
-        return math.sqrt(self.x * self.x + self.y * self.y)
+        return math.sqrt((self.x * self.x) + (self.y * self.y))
+
+    def __truediv__(self, n):
+        self.x = self.x / n
+        self.y = self.y / n
+        return self
+
+    def normalize(self):
+        return (self / self.magnitude()).magnitude()
 
 
 
