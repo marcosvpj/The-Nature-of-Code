@@ -2,8 +2,14 @@ import math
 
 
 class PVector:
-    def __init__(self, x, y):
+    def __init__(self, x, y) -> object:
         self.x = x
+        self.y = y
+
+    def x(self, x):
+        self.x = x
+
+    def y(self, y):
         self.y = y
 
     def __add__(self, other):
