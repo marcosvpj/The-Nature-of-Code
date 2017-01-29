@@ -8,9 +8,13 @@ from vectors.PVector import PVector
 class Mover:
     def __init__(self):
         self.location = PVector(randrange(150, 300), randrange(150, 300))
-        self.velocity = PVector(randrange(-1, 1), randrange(-1, 1))
+        self.velocity = PVector(0, 0)
+        self.acceleration = PVector(0.1, 0.01)
+        self.top_speed = 1
 
     def step(self):
+        self.velocity += self.acceleration
+        self.velocity.limit(self.top_speed)
         self.location += self.velocity
 
     def check_edges(self, surface):

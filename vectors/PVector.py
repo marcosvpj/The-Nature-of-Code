@@ -24,6 +24,9 @@ class PVector:
     def __sub__(self, other):
         return PVector(self.x - other.x, self.y - other.y)
 
+    def __mul__(self, n):
+        return PVector(self.x * n, self.y * n)
+
     def magnitude(self):
         return math.sqrt((self.x * self.x) + (self.y * self.y))
 
@@ -35,5 +38,8 @@ class PVector:
     def normalize(self):
         return (self / self.magnitude()).magnitude()
 
-
+    def limit(self, limit):
+        if self.magnitude() > limit:
+            self.normalize()
+            self = self * limit
 
