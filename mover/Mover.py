@@ -10,9 +10,11 @@ class Mover:
         self.location = PVector(randrange(150, 300), randrange(150, 300))
         self.velocity = PVector(0, 0)
         self.acceleration = PVector(0.1, 0.01)
-        self.top_speed = 1
+        self.top_speed = 7
 
     def step(self):
+        # self.acceleration.random2D(5)
+
         self.velocity += self.acceleration
         self.velocity.limit(self.top_speed)
         self.location += self.velocity
@@ -33,7 +35,20 @@ class Mover:
         s.fill((255, 255, 255))
         return s
 
+    def acceleration_to(self, to):
+        direction = to - self.location
+        distance = direction.magnitude()
+
+        direction.normalize()
+        direction /= distance / 10
+
+        return direction
+
     def update(self, surface):
         self.check_edges(surface)
+
+        mouse = pygame.mouse
+        self.acceleration = self.acceleration_to(PVector(mouse.get_pos()[0], mouse.get_pos()[1]))
+
         self.step()
         surface.blit(self.sprite(), tuple(self.location))

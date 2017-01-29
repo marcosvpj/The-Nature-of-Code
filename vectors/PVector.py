@@ -1,4 +1,5 @@
 import math
+from random import randrange
 
 
 class PVector:
@@ -41,5 +42,10 @@ class PVector:
     def limit(self, limit):
         if self.magnitude() > limit:
             self.normalize()
-            self = self * limit
+            self.x *= limit
+            self.y *= limit
+
+    def random2D(self, limit):
+        self.x = randrange(limit*-1, limit)
+        self.y = randrange(limit*-1, limit)
 

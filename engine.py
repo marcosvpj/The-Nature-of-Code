@@ -35,7 +35,7 @@ def main(main_loop):
     clock = pygame.time.Clock()
 
     while should_keep_running():
-        clock.tick(60)
+        clock.tick(30)
         pygame.display.flip()
         # print(clock.get_fps())
         main_loop(screen)
