@@ -27,5 +27,6 @@ class Loop:
         screen.fill((0, 0, 0))
 
         for entity in self.entities:
+            entity.setEntities(self.entities)
             entity.update(screen)
 

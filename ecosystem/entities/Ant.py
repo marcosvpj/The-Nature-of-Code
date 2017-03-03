@@ -1,13 +1,15 @@
-from random import randrange
 import random
+from random import randrange
 
 import pygame
 
+from ecosystem.entities.Entity import Entity
 from vectors.PVector import PVector
 
 
-class Ant:
+class Ant(Entity):
     def __init__(self):
+        super().__init__()
         random.seed()
         self.location = PVector(randrange(125, 150), randrange(125, 150))
         self.velocity = PVector(2, 2)

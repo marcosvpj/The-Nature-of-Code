@@ -1,13 +1,15 @@
-from random import randrange
 import random
+from random import randrange
 
 import pygame
 
+from ecosystem.entities.Entity import Entity
 from vectors.PVector import PVector
 
 
-class Snail:
+class Snail(Entity):
     def __init__(self):
+        super().__init__()
         random.seed()
         self.location = PVector(randrange(200, 600), randrange(200, 600))
         self.velocity = PVector(2, 2)
