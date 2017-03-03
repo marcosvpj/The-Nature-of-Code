@@ -25,17 +25,14 @@ def write(screen, text):
     screen.blit(label, (100, 100))
 
 
-def main(main_loop):
-    screen_width = 800
-    screen_height = 600
-
-    screen = pygame.display.set_mode((screen_width, screen_height))
+def main(main_loop, ticks=30, screen_size=(800, 600)):
+    screen = pygame.display.set_mode(screen_size)
     pygame.init()
 
     clock = pygame.time.Clock()
 
     while should_keep_running():
-        clock.tick(30)
+        clock.tick(ticks)
         pygame.display.flip()
         # print(clock.get_fps())
         main_loop(screen)
