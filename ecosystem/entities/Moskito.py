@@ -1,19 +1,21 @@
-from random import randrange
 import random
+from random import randrange
 
 import pygame
 
+from ecosystem.entities.Entity import Entity
 from vectors.PVector import PVector
 
 
-class Moskito:
+class Moskito(Entity):
     def __init__(self):
+        super().__init__()
         random.seed()
         self.location = PVector(randrange(50, 750), randrange(50, 550))
         self.velocity = PVector(2, 2)
 
     def update(self, screen):
-        pygame.draw.circle(screen, (255, 255, 255), tuple(self.location), 2)
+        pygame.draw.circle(screen, (100, 100, 100), tuple(self.location), 2)
 
         random.seed()
         step = randrange(-1, 4)
