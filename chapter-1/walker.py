@@ -1,11 +1,12 @@
 import random
 
-import engine
 from walker.CustomDistributionRandomWalker import CustomDistributionRandomWalker
 from walker.GaussianRandomWalker import GaussianRandomWalker
 from walker.NonUniformWalker import NonUniformWalker
 from walker.RandomWalker import RandomWalker
 from walker.WalkerSprite import WalkerSprite
+
+import engine
 
 
 class Loop:

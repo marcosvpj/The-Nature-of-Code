@@ -1,5 +1,6 @@
-import engine
 from mover.Mover import Mover
+
+import engine
 
 
 class Loop:

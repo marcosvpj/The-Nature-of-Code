@@ -1,5 +1,4 @@
 from random import randrange, gauss
-from time import sleep
 
 from walker.Walker import Walker
 
