@@ -1,3 +1,4 @@
+import copy
 from random import randrange
 
 import pygame
@@ -9,23 +10,21 @@ from noise import pnoise2, snoise2, pnoise1
 
 class Balloon:
     def __init__(self):
-        self.location = PVector(randrange(50, 750), 580)
+        self.location = PVector(randrange(50, 750), 15)
         self.velocity = PVector(0, 0)
         self.acceleration = PVector(0, 0)
 
         self.velocity_limit = False
         self.color = (randrange(0, 255), randrange(0, 255), randrange(0, 255))
 
-        self.mass = randrange(2, 5)
+        self.mass = randrange(2, 10)
 
     def apply_force(self, force):
-        force /= self.mass
-        self.acceleration += force
+        self.acceleration += force / self.mass
 
     def update(self, screen):
-
-        helium = PVector(0, -1)
-        self.apply_force(helium)
+        # helium = PVector(0, -1)
+        # self.apply_force(helium)
 
         self.velocity += self.acceleration
         self.location += self.velocity
@@ -34,40 +33,37 @@ class Balloon:
         if self.velocity_limit is not False:
             self.velocity.limit(self.velocity_limit)
 
-        self.bounce_on_edges()
         self.draw_on_screen(screen)
+        self.bounce_on_edges()
 
     def limit_velocity(self, limit):
         self.velocity_limit = limit
 
     def draw_on_screen(self, screen):
         draw_position = (int(self.location.x), int(self.location.y))
-        pygame.draw.circle(screen, self.color, draw_position, 10)
+        pygame.draw.circle(screen, self.color, draw_position, self.mass * 3)
 
     def bounce_on_edges(self):
-        bounce_velocity = self.velocity * self.mass * 3 * -1
-
         if self.location.y <= 10:
             self.location.y = 10
-            bounce_velocity.x = 0
-            self.apply_force(bounce_velocity)
-        elif self.location.x <= 10:
+            self.velocity.y *= -1
+        elif self.location.y >= 550:
+            self.location.y = 550
+            self.velocity.y *= -1
+
+        if self.location.x <= 10:
             self.location.x = 10
-            bounce_velocity.y = 0
-            self.apply_force(bounce_velocity)
+            self.velocity.x *= -1
         elif self.location.x >= 790:
             self.location.x = 790
-            bounce_velocity.y = 0
-            self.apply_force(bounce_velocity)
+            self.velocity.x *= -1
 
 
 class Loop:
     def __init__(self):
-        self.balloon = Balloon()
-        self.balloon.limit_velocity(7)
-
-        self.balloon2 = Balloon()
-        self.balloon2.limit_velocity(5)
+        self.entities = []
+        for entity in range(5):
+            self.entities.append(Balloon())
 
         self.t = randrange(0, 1000)
         self.base = 0
@@ -79,15 +75,31 @@ class Loop:
         screen.fill((0, 0, 0))
 
         noise = self.calculate_noise()
-        noise *= 10
+        # noise *= 3
 
-        wind = PVector(noise, randrange(-3, 0))
+        for entity in self.entities:
+            wind = PVector(noise, 0)
+            entity.apply_force(wind)
 
-        self.balloon.apply_force(wind)
-        self.balloon2.apply_force(wind)
+            gravity = PVector(0, .5 * entity.mass)
+            entity.apply_force(gravity)
 
-        self.balloon.update(screen)
-        self.balloon2.update(screen)
+            friction = self.calculate_friction(entity.velocity)
+            entity.apply_force(friction)
+
+            entity.update(screen)
+
+    def calculate_friction(self, velocity):
+        friction_coefficient = .5
+        normal_force = 1
+        friction_magnitude = friction_coefficient * normal_force
+
+        friction = copy.deepcopy(velocity)
+        friction *= -1
+        friction.normalize()
+        friction *= friction_magnitude
+
+        return friction
 
     def calculate_noise(self):
         x = float(self.t) * self.span / self.points - 0.5 * self.span
