@@ -34,8 +34,7 @@ class Balloon:
         if self.velocity_limit is not False:
             self.velocity.limit(self.velocity_limit)
 
-        self.top_bounce()
-
+        self.bounce_on_edges()
         self.draw_on_screen(screen)
 
     def limit_velocity(self, limit):
@@ -45,10 +44,21 @@ class Balloon:
         draw_position = (int(self.location.x), int(self.location.y))
         pygame.draw.circle(screen, self.color, draw_position, 10)
 
-    def top_bounce(self):
-        if self.location.y <= 50:
-            self.location.y = 50
-            self.apply_force(self.velocity * self.mass * 3 * -1)
+    def bounce_on_edges(self):
+        bounce_velocity = self.velocity * self.mass * 3 * -1
+
+        if self.location.y <= 10:
+            self.location.y = 10
+            bounce_velocity.x = 0
+            self.apply_force(bounce_velocity)
+        elif self.location.x <= 10:
+            self.location.x = 10
+            bounce_velocity.y = 0
+            self.apply_force(bounce_velocity)
+        elif self.location.x >= 790:
+            self.location.x = 790
+            bounce_velocity.y = 0
+            self.apply_force(bounce_velocity)
 
 
 class Loop:
