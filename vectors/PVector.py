@@ -37,7 +37,8 @@ class PVector:
         return self
 
     def normalize(self):
-        return (self / self.magnitude()).magnitude()
+        if self.magnitude() != 0:
+            self /= self.magnitude()
 
     def limit(self, limit):
         if self.magnitude() > limit:
