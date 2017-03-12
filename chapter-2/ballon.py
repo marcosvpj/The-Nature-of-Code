@@ -14,6 +14,7 @@ WINDOW_HEIGHT = 600
 
 class Balloon:
     def __init__(self):
+        self.frontal_area = 1
         self.location = PVector(randrange(50, 750), randrange(15, 100))
         self.velocity = PVector(0, 0)
         self.acceleration = PVector(0, 0)
@@ -76,6 +77,7 @@ class Balloon:
         drag *= -1
         drag.normalize()
         drag *= drag_magnitude
+        drag *= self.frontal_area
 
         self.apply_force(drag)
 
